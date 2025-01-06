@@ -81,7 +81,7 @@ const options = {
 }
 posthog.init('phc_nw82yqEAge7jrHSteuuhmTBKWAcEs5syHBbuLL8uQjz', {
   api_host: 'https://us.i.posthog.com',
-  person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
+  person_profiles: 'always' // or 'always' to create profiles for anonymous users as well
 })
 
 const queryClient = new QueryClient()
