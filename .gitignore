@@ -5,6 +5,6 @@
 # React Router
 /.react-router/
 /build/
-
+.env
 # Vercel
 /.vercel/

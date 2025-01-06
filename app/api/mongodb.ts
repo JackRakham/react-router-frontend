@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import type { RoomieInfo } from "./model";
 
-const client = new MongoClient(import.meta.env.VITE_MONGODB_URI, {
+const client = new MongoClient("mongodb+srv://roomatchoficial:zO6sROokX04mxU2h@testdb.dvin4.mongodb.net/?retryWrites=true&w=majority&appName=Testdb", {
     serverApi: {
         version: ServerApiVersion.v1,
         strict: true,

@@ -3,8 +3,8 @@ import { createRoomie } from "./model/roomie";
 import { createRoomieArrendador } from "./model/roomieArrendador";
 import { getUserInfo } from "./mongodb";
 
-const API_KEY = import.meta.env.VITE_JOTFORM_APIKEY;
-
+const API_KEY = "import.meta.env.VITE_JOTFORM_APIKEY;"
+console.log(API_KEY)
 export async function editSubmission(questionId: string, newAnswer: string, submissionId: string) {
     try {
         const requestBody = {
