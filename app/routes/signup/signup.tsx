@@ -11,7 +11,7 @@ import { Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import roomiesPicture from './assets/roomies.jpg'
 import roomatchIcon from '../../assets/logo-no-letters.svg'
 import { useState } from "react";
-
+import posthog from "posthog-js";
 export default function Signup() {
     const { state, dispatch } = useManageFilesUpload();
     const [kindOfUser, setKindOfUser] = useState<string | null>(null);
@@ -76,6 +76,10 @@ export default function Signup() {
             });
         },
         mutationKey: ['signup'],
+        onSuccess: () => {
+            posthog.capture('Registro exitoso'
+            )
+        }
     });
 
     const onOpenChangeProducer = (state: boolean, type: Action['type']) => () => { if (state) dispatch({ type } as Action) }
@@ -144,7 +148,8 @@ export default function Signup() {
         }
 
         if (kindOfUser == 'RoomieRent' && !errorMessage && (errorsOnSubmit.length === 0 || (errorsOnSubmit.length === 1 && errorsOnSubmit[0] === 'initialError'))) signUpMutation.mutate();
-        
+
+
     }
 
     return (
