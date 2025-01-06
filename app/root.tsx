@@ -101,7 +101,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
 
-      <PostHogProvider apiKey={import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY} options={options} client={posthog}>
+      <PostHogProvider apiKey={import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY} client={posthog}>
         <Theme accentColor="violet" appearance="light" grayColor="gray" radius="large" scaling="100%" panelBackground='translucent'>
           <Outlet />
         </Theme>
