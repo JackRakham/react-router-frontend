@@ -9,7 +9,6 @@ export async function editSubmission(questionId: string, newAnswer: string, subm
     try {
         const requestBody = {
             [questionId]: newAnswer,
-
         };
         const response = await fetch(`https://api.jotform.com/submission/${submissionId}?apiKey=${API_KEY}`, {
             method: "POST",

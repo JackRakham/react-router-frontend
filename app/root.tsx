@@ -22,6 +22,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import '@fontsource/poppins';
 import '@fontsource-variable/comfortaa';
+import { useState } from "react";
 
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react'
@@ -45,10 +46,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="bg-mirrage dark:bg-mirrage">
       <head>
+        <title>Roomatch</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="Roomatch | Encuentra vivienda compartida y roomies ideales" />
+        <meta property="og:description" content="En Roomatch, encuentra vivienda compartida y roomies ideales, conecta y convive" />
+        <meta property="og:image" content="/favicon.ico" />
+        <meta property="og:url" content="https://www.roomatch.me" />
+        <meta property="og:type" content="website" />
         <Meta />
-        <Links />
+        <Links  />
         <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
       </head>
       <body>
@@ -75,9 +82,21 @@ const options = {
 
 const queryClient = new QueryClient()
 
+
 export default function App() {
+    const [queryClient] = useState(
+      () =>
+        new QueryClient({
+          defaultOptions: {
+            queries: {
+              staleTime: 60 * 1000,
+            },
+          },
+        }),
+    )
   return (
     <QueryClientProvider client={queryClient}>
+
       <PostHogProvider apiKey={import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY} options={options}>
         <Theme accentColor="violet" appearance="light" grayColor="gray" radius="large" scaling="100%" panelBackground='translucent'>
           <Outlet />

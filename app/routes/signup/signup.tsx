@@ -11,7 +11,6 @@ import { Button, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import roomiesPicture from './assets/roomies.jpg'
 import roomatchIcon from '../../assets/logo-no-letters.svg'
 import { useState } from "react";
-import { editSubmission } from "~/api/jotform";
 
 export default function Signup() {
     const { state, dispatch } = useManageFilesUpload();
@@ -60,13 +59,26 @@ export default function Signup() {
             if (state.isUploadInfoNotificationOpened) dispatch({ type: "TOGGLE_INFO_NOTIFICATION" });
             if (!state.isUploadSuccessNotificationOpened) dispatch({ type: "TOGGLE_SUCCESS_NOTIFICATION" });
         },
+        mutationKey: ['files'],
+    });
+
+    const signUpMutation = useMutation({
+        mutationFn: async () => {
+            const requestBody = {
+                ['92']: state.images.join(';'),
+            };
+            await fetch(`https://api.jotform.com/submission/${inputValue}?apiKey=${import.meta.env.VITE_JOTFORM_APIKEY}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            });
+        },
+        mutationKey: ['signup'],
     });
 
     const onOpenChangeProducer = (state: boolean, type: Action['type']) => () => { if (state) dispatch({ type } as Action) }
-
-    const signUpMutation = useMutation({
-        mutationFn: () => editSubmission("92", state.images.join(';'), inputValue),
-    });
 
     const notifications = [{
         open: state.isUploadInfoNotificationOpened,
@@ -103,9 +115,7 @@ export default function Signup() {
         onOpenChange: undefined,
         icon: success,
         title: "Te has registrado exitosamente.",
-    },
-    ]
-
+    }];
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -132,8 +142,9 @@ export default function Signup() {
             if ((errorMessage || inputValue.length !== 19)) setErrorMessage("Ingresa tu ID de envío.");
             if (state.images.length < 2) setErrorsOnSubmit([...errorsOnSubmit, 'Carga al menos dos imágenes']);
         }
-        
+
         if (kindOfUser == 'RoomieRent' && !errorMessage && (errorsOnSubmit.length === 0 || (errorsOnSubmit.length === 1 && errorsOnSubmit[0] === 'initialError'))) signUpMutation.mutate();
+        
     }
 
     return (
@@ -232,6 +243,5 @@ export default function Signup() {
 
             </Flex>
         </Toast.Provider>
-
     );
 }

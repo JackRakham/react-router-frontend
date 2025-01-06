@@ -1,6 +1,5 @@
-import { Flex, Heading, Badge, Button, Text, Box } from "@radix-ui/themes";
+import { Flex, Heading, Badge, Text, Box } from "@radix-ui/themes";
 import Tooltip from "./components/tootip/tooltip";
-import { Link } from "react-router";
 import Check from "./assets/check";
 import X from "./assets/x";
 
@@ -126,11 +125,12 @@ export default function Plans({ tiers }: PlanProps) {
                             </li>
                         ))}
                     </ul>
+                    {/*
                     <Link to="/registrarme" className="w-full flex items-center justify-center">
                         <Button className="mt-8 transition-all hover:cursor-pointer text-white">
                             Elegir este plan
                         </Button>
-                    </Link>
+                    </Link>*/}
                     </Flex>
             ))}
         </Flex>
