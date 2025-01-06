@@ -55,7 +55,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta property="og:url" content="https://www.roomatch.me" />
         <meta property="og:type" content="website" />
         <Meta />
-        <Links  />
+        <Links />
         <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
       </head>
       <body>
@@ -79,25 +79,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
 const options = {
   api_host: import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_HOST
 }
+posthog.init('phc_nw82yqEAge7jrHSteuuhmTBKWAcEs5syHBbuLL8uQjz', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'identified_only' // or 'always' to create profiles for anonymous users as well
+})
 
 const queryClient = new QueryClient()
 
 
 export default function App() {
-    const [queryClient] = useState(
-      () =>
-        new QueryClient({
-          defaultOptions: {
-            queries: {
-              staleTime: 60 * 1000,
-            },
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
           },
-        }),
-    )
+        },
+      }),
+  )
   return (
     <QueryClientProvider client={queryClient}>
 
-      <PostHogProvider apiKey={import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY} options={options}>
+      <PostHogProvider apiKey={import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY} options={options} client={posthog}>
         <Theme accentColor="violet" appearance="light" grayColor="gray" radius="large" scaling="100%" panelBackground='translucent'>
           <Outlet />
         </Theme>
